@@ -1,323 +1,201 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Juego Romántico: Notas y Calificaciones</title>
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    * { box-sizing: border-box; }
-    body {
-      font-family: 'Poppins', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: linear-gradient(135deg, #FFC1E3, #FF8DAA);
-      color: #333;
-    }
-    header {
-      text-align: center;
-      padding: 20px;
-      background: rgba(255, 255, 255, 0.8);
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2.5rem;
-      color: #FF4081;
-    }
-    .container {
-      max-width: 800px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.95);
-      padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    }
-    /* Sección de selección de rol */
-    .role-selection {
-      text-align: center;
-      margin-bottom: 20px;
-    }
-    .role-selection button {
-      background: #FF4081;
-      border: none;
-      color: #fff;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      margin: 0 10px;
-      transition: background 0.3s;
-    }
-    .role-selection button:hover {
-      background: #e73370;
-    }
-    .role-display {
-      text-align: center;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: #00cc66;
-    }
-    /* Formulario para enviar nota */
-    #noteForm {
-      display: none;
-      margin-bottom: 20px;
-    }
-    textarea {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 5px;
-      font-size: 1rem;
-      margin-bottom: 10px;
-      resize: vertical;
-    }
-    .btn {
-      background: #FF4081;
-      border: none;
-      color: white;
-      padding: 10px 20px;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 5px;
-      transition: background 0.3s;
-    }
-    .btn:hover {
-      background: #e73370;
-    }
-    /* Notas guardadas y pendientes de calificar */
-    #notesContainer .message {
-      background: #fff;
-      border: 1px solid #ddd;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 5px;
-    }
-    #notesContainer .message strong {
-      color: #FF4081;
-    }
-    h2 {
-      color: #FF4081;
-    }
-    /* Nivel de Enamorar */
-    #loveMeter {
-      margin: 20px 0;
-      text-align: center;
-    }
-    .meter {
-      height: 20px;
-      background: #ddd;
-      border-radius: 10px;
-      overflow: hidden;
-      margin: 10px 0;
-    }
-    .meter span {
-      display: block;
-      height: 100%;
-      background: #FF4081;
-      width: 0;
-      transition: width 0.5s;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Votaciones - Arena Breakout Mobile</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <style>
+        body {
+            font-family: 'Orbitron', sans-serif;
+            background-color: #121212;
+            color: white;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            position: relative;
+            overflow: hidden;
+        }
+        video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.2;
+            z-index: -1;
+        }
+        .top-bar {
+            background: #1e1e1e;
+            padding: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            border-radius: 10px;
+            z-index: 2;
+            box-shadow: 0px 4px 10px rgba(255, 255, 255, 0.1);
+        }
+        .top-bar span {
+            font-size: 18px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .top-bar span i {
+            margin-right: 8px;
+        }
+        .top-bar button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 80px auto 50px auto;
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.1);
+            position: relative;
+            z-index: 1;
+        }
+        .hidden { display: none; }
+        .weapon {
+            margin: 5px 0;
+            padding: 10px;
+            background: #292929;
+            border-radius: 8px;
+        }
+        img {
+            width: 120%;
+            max-width: 240px;
+            border-radius: 5px;
+        }
+        button {
+            background: #ff9800;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+            font-family: 'Orbitron', sans-serif;
+        }
+        button:hover {
+            background: #e68900;
+        }
+        input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .scroll-container {
+            max-height: 400px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: #ff9800 #1e1e1e;
+        }
+        .scroll-container::-webkit-scrollbar {
+            width: 8px;
+        }
+        .scroll-container::-webkit-scrollbar-track {
+            background: #1e1e1e;
+            border-radius: 10px;
+        }
+        .scroll-container::-webkit-scrollbar-thumb {
+            background: #ff9800;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-  <header>
-    <h1>Bienvenida Prince❤️</h1>
-  </header>
-  <div class="container">
+    <video autoplay loop muted>
+        <source src="Video1.mp4" type="video/mp4">
+        Tu navegador no soporta videos en HTML5.
+    </video>
     
-    <!-- SELECCIÓN DE PERSONAJE -->
-    <div class="role-selection">
-      <p><strong>Selecciona tu personaje:</strong></p>
-      <button id="btnJuan">Soy Juan</button>
-      <button id="btnMari">Soy Mari</button>
-    </div>
-    <div class="role-display" id="roleDisplay">
-      (Debes elegir un personaje)
+    <div id="login" class="container">
+        <h2>Iniciar Sesión</h2>
+        <input type="text" id="username" placeholder="Usuario">
+        <button onclick="login()">Ingresar</button>
     </div>
     
-    <!-- FORMULARIO PARA ENVIAR NOTA -->
-    <div id="noteForm">
-      <h2>Enviar Nota</h2>
-      <p id="sendInfo"></p>
-      <textarea id="noteInput" rows="4" placeholder="Escribe tu nota..."></textarea>
-      <button id="saveButton" class="btn">Enviar Nota</button>
+    <div id="voting" class="container hidden">
+        <div class="top-bar">
+            <span id="userDisplay"><i class="fas fa-user"></i></span>
+            <button onclick="logout()">Cerrar Sesión</button>
+        </div>
+        <h2>Escoge tu arma favorita</h2>
+        <div class="scroll-container">
+            <div class="weapon">
+                <h3>H4</h3>
+                <img src="Arma1.jpg" alt="H4"><br>
+                <button onclick="vote('H4')">Votar</button>
+            </div>
+            <div class="weapon">
+                <h3>ScarL</h3>
+                <img src="Arma2.jpg" alt="ScarL"><br>
+                <button onclick="vote('ScarL')">Votar</button>
+            </div>
+            <div class="weapon">
+                <h3>M4</h3>
+                <img src="Arma3.jpg" alt="M4"><br>
+                <button onclick="vote('M4')">Votar</button>
+            </div>
+        </div>
+        <p id="voteMessage"></p>
+        <button onclick="confirmVote()">Confirmar Votación</button>
     </div>
     
-    <!-- SECCIÓN DE NOTAS PENDIENTES DE CALIFICAR -->
-    <div id="pendingRatings">
-      <h2>Notas pendientes de calificar</h2>
-      <div id="pendingContainer"></div>
-    </div>
-    
-    <!-- NIVEL DE ENAMORAR -->
-    <div id="loveMeter">
-      <h2>Nivel de Conquista </h2>
-      <div class="meter">
-        <span id="loveMeterBar" style="width:0%"></span>
-      </div>
-      <p id="loveMeterValue">0 / 10</p>
-    </div>
-    
-    <!-- SECCIÓN GENERAL DE NOTAS ENVIADAS -->
-    <div id="messages">
-      <h2>Notas Enviadas</h2>
-      <div id="notesContainer"></div>
-    </div>
-  </div>
-  
-  <script>
-    // Variables globales
-    let activeRole = null;       // Rol activo: "Juan" o "Mari"
-    let oppositeRole = null;     // Rol contrario al activo
+    <script>
+        let selectedWeapon = "";
+        let username = "";
 
-    // Elementos de selección de rol
-    const btnJuan = document.getElementById('btnJuan');
-    const btnMari = document.getElementById('btnMari');
-    const roleDisplay = document.getElementById('roleDisplay');
-    const noteForm = document.getElementById('noteForm');
-    const sendInfo = document.getElementById('sendInfo');
-
-    // Asignar rol al hacer clic
-    btnJuan.addEventListener('click', () => {
-      activeRole = "Juan";
-      oppositeRole = "Mari";
-      updateRoleDisplay();
-    });
-    btnMari.addEventListener('click', () => {
-      activeRole = "Mari";
-      oppositeRole = "Juan";
-      updateRoleDisplay();
-    });
-
-    function updateRoleDisplay() {
-      roleDisplay.textContent = `Tu rol: ${activeRole} | Enviarás notas a: ${oppositeRole}`;
-      // Mostrar el formulario para enviar nota
-      noteForm.style.display = 'block';
-      sendInfo.textContent = `Estás enviando una nota a ${oppositeRole}.`;
-      // Actualizar las secciones de calificación y medidor
-      displayNotes();
-      displayPendingRatings();
-      updateLoveMeter();
-    }
-
-    // Función para guardar la nota (se guarda sin calificación)
-    function saveNote() {
-      const noteText = document.getElementById('noteInput').value;
-      if (!activeRole) {
-        alert("Primero elige tu rol.");
-        return;
-      }
-      if (!noteText.trim()) {
-        alert('Por favor, escribe algo en la nota.');
-        return;
-      }
-      
-      let notes = JSON.parse(localStorage.getItem('romanticNotes')) || [];
-      const today = new Date();
-      const formattedDate = today.toLocaleDateString('es-ES');
-      const noteObject = {
-        date: formattedDate,
-        sender: activeRole,
-        recipient: oppositeRole,
-        content: noteText,
-        rating: null  // Sin calificar aún
-      };
-      
-      notes.push(noteObject);
-      localStorage.setItem('romanticNotes', JSON.stringify(notes));
-      
-      document.getElementById('noteInput').value = '';
-      displayNotes();
-      displayPendingRatings();
-      updateLoveMeter();
-    }
-
-    // Mostrar todas las notas enviadas
-    function displayNotes() {
-      const container = document.getElementById('notesContainer');
-      container.innerHTML = '';
-      let notes = JSON.parse(localStorage.getItem('romanticNotes')) || [];
-      
-      // Se muestran todas las notas
-      notes.forEach((note, index) => {
-        const noteDiv = document.createElement('div');
-        noteDiv.className = 'message';
-        noteDiv.innerHTML = `<strong>${note.date}</strong> - De: <em>${note.sender}</em> para <em>${note.recipient}</em><br>
-                             ${note.content}<br>
-                             Calificación: ${note.rating !== null ? note.rating : 'Pendiente'}`;
-        container.appendChild(noteDiv);
-      });
-    }
-
-    // Mostrar las notas pendientes de calificar
-    // Solo se muestran si el rol activo es el destinatario y la nota aún no tiene calificación
-    function displayPendingRatings() {
-      const pendingContainer = document.getElementById('pendingContainer');
-      pendingContainer.innerHTML = '';
-      let notes = JSON.parse(localStorage.getItem('romanticNotes')) || [];
-      
-      notes.forEach((note, index) => {
-        if (note.rating === null && activeRole === note.recipient) {
-          const noteDiv = document.createElement('div');
-          noteDiv.className = 'message';
-          noteDiv.innerHTML = `<strong>${note.date}</strong> - De: <em>${note.sender}</em><br>
-                               ${note.content}<br>
-                               <button class="btn" onclick="rateNote(${index})">Calificar</button>`;
-          pendingContainer.appendChild(noteDiv);
+        function login() {
+            username = document.getElementById("username").value;
+            if (username.trim() !== "") {
+                document.getElementById("login").classList.add("hidden");
+                document.getElementById("voting").classList.remove("hidden");
+                document.getElementById("userDisplay").innerHTML = `<i class='fas fa-user'></i> Usuario: ${username}`;
+            }
         }
-      });
-    }
+        
+        function logout() {
+            document.getElementById("login").classList.remove("hidden");
+            document.getElementById("voting").classList.add("hidden");
+            document.getElementById("username").value = "";
+            username = "";
+        }
 
-    // Función para calificar una nota pendiente
-    function rateNote(index) {
-      let notes = JSON.parse(localStorage.getItem('romanticNotes')) || [];
-      // Verifica que el rol activo sea el destinatario de la nota
-      if (activeRole !== notes[index].recipient) {
-        alert("No puedes calificar esta nota.");
-        return;
-      }
-      let rating = prompt("Califica la nota (1-10):");
-      if (rating === null) return; // Cancelado
-      rating = Number(rating);
-      if (isNaN(rating) || rating < 1 || rating > 10) {
-        alert("Por favor, ingresa un número entre 1 y 10.");
-        return;
-      }
-      notes[index].rating = rating;
-      localStorage.setItem('romanticNotes', JSON.stringify(notes));
-      displayNotes();
-      displayPendingRatings();
-      updateLoveMeter();
-    }
+        function vote(weapon) {
+            selectedWeapon = weapon;
+            document.getElementById("voteMessage").innerText = `Has seleccionado ${weapon}. Pulsa Confirmar Votación para enviar tu voto.`;
+        }
 
-    // Actualizar el nivel de enamorar
-    // Calcula el promedio de las calificaciones de todas las notas que ya han sido calificadas.
-    function updateLoveMeter() {
-      let notes = JSON.parse(localStorage.getItem('romanticNotes')) || [];
-      let ratedNotes = notes.filter(note => note.rating !== null);
-      if (ratedNotes.length === 0) {
-        document.getElementById('loveMeterValue').textContent = "0 / 10";
-        document.getElementById('loveMeterBar').style.width = "0%";
-        return;
-      }
-      let sum = ratedNotes.reduce((acc, note) => acc + note.rating, 0);
-      let avg = sum / ratedNotes.length;
-      let avgRounded = avg.toFixed(1);
-      document.getElementById('loveMeterValue').textContent = `${avgRounded} / 10`;
-      let width = (avg / 10) * 100;
-      document.getElementById('loveMeterBar').style.width = width + "%";
-    }
-
-    // Asignar evento al botón de enviar nota
-    document.getElementById('saveButton').addEventListener('click', saveNote);
-
-    // Al cargar la página se muestran las notas guardadas (si las hubiera)
-    displayNotes();
-    displayPendingRatings();
-    updateLoveMeter();
-  </script>
+        function confirmVote() {
+            if (selectedWeapon) {
+                alert(`Votación confirmada por: ${selectedWeapon}`);
+                document.getElementById("voteMessage").innerText = `Has votado por ${selectedWeapon}.`;
+            } else {
+                alert("Por favor, selecciona un arma antes de confirmar.");
+            }
+        }
+    </script>
 </body>
 </html>
+
